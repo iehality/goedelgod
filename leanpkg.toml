@@ -1,0 +1,8 @@
+[package]
+name = "goedelgod"
+version = "0.1"
+lean_version = "leanprover-community/lean:3.45.0"
+path = "src"
+
+[dependencies]
+mathlib = {git = "https://github.com/leanprover-community/mathlib", rev = "356f889cfea16eb4b78fd53e49af6815f7baf9da"}
