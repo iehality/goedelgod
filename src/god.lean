@@ -64,13 +64,13 @@ begin
     have : (positive (λ x, ¬ₘψ x)) w, from (axiom1 ψ w).mpr A,
     have : ¬ψ x w, from hg (λ x, ¬ₘψ x) this,
     contradiction },
-  have : positive ψ v, from axiom4 ψ w this v hv,
+  have : positive /watch/so40834219ψ v, from axiom4 ψ w this v hv,
   exact hy ψ this
 end
 -- 神的なものは神性の本質である
 
 def necessary_existence (x : α) : F.prop := ∀ₘ φ, φ ess x ⟶ □∃ₘ y, φ y
--- xが本質であるようなあらゆる性質が必然的に満たされる時、xは必然的存在(Necessary existence)である
+-- xが本質であるあらゆる性質が、それを満たすものが必然的に存在する時、xは必然的存在(Necessary existence)である
 
 axiom axiom5 : ⊧ positive (necessary_existence : α → F.prop)
 -- 本質的存在性は肯定的である
@@ -91,12 +91,15 @@ end
 theorem modal_collapse {φ : F.prop} : ⊧ φ ⟷ □φ := λ w,
 ⟨λ hw v rv,
   begin
-    have T4w : ∃ x : α, godlike x w, from theorem4 w w (T.reflexivity w),
-    have T4v : ∃ x : α, godlike x v, from theorem4 w v rv,
-    rcases T4v with ⟨x, T4v⟩,  
-    have : (∃ x : α, godlike x w) → (φ ⟶ □∀ₘ y : α, godlike y ⟶ φ) w,
-    { rintros ⟨x, hw⟩, simpa using (theorem3 w x hw).2 (λ _, φ)},
-    exact this T4w hw v rv x T4v
+    have : (□∀ₘ y : α, godlike y ⟶ φ) w,
+    { have : ∃ x : α, godlike x w, from theorem4 w w (T.reflexivity w),
+      rcases this with ⟨x, gw⟩,
+      have : (φ ⟶ □∀ₘ (y : α), godlike y ⟶ φ) w,
+        from (theorem3 w x gw).2 (λ _, φ),
+      exact this hw },
+    have : ∃ x : α, godlike x v, from theorem4 w v rv,
+    rcases this with ⟨x, gx⟩,
+    refine this v rv x gx
   end, box_implies w⟩
 -- そんな...
 
